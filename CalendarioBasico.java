@@ -5,11 +5,11 @@
 public class CalendarioBasico
 {
     //se inicializa el dia
-    private int dia;
+    private DisplayDosCaracteres dia;
     //se inicializa el mes   
-    private int mes;
+    private DisplayDosCaracteres mes;
     //se inicializa el año
-    private int anio;
+    private DisplayDosCaracteres anio;
 
     /**
      * damos los valores de todos los parametros
@@ -17,9 +17,9 @@ public class CalendarioBasico
     public CalendarioBasico()
     {
 
-        dia = 1;
-        mes = 1;
-        anio = 1;
+        dia = new DisplayDosCaracteres(31);
+        mes = new DisplayDosCaracteres(13);
+        anio = new DisplayDosCaracteres(100);
 
     }
     /**
@@ -27,66 +27,36 @@ public class CalendarioBasico
      */
     public void fijarFecha(int nuevoDia, int nuevoMes, int nuevoAnio)
     {
-        dia = nuevoDia;
-        mes = nuevoMes;
-        anio = nuevoAnio;
+        dia.setValorAlmacenado(nuevoDia);
+        mes.setValorAlmacenado(nuevoMes);
+        anio.setValorAlmacenado(nuevoAnio); 
     }
     /**
      * permite avanzar de fecha 
      */
     public void avanzarFecha()
     {
-        dia += 1;
-        if(dia > 30){
-            mes += 1;
-            dia = 1;
-            if(mes > 12){
-                anio += 1;
-                mes = 1;
-                if(anio > 99){
-                    //dia = 1;
-                    anio = 0;
-                }
+        dia.incrementaValorAlmacenado();
+        //Ahora compruebo si tengo que incrementar el mes...
+        if (dia.getValorAlmacenado() == 1){
+            mes.incrementaValorAlmacenado();
+            //Ahora compruebo si tengo que incrementar el año..
+            if(mes.getValorAlmacenado() == 1){
+                anio.incrementaValorAlmacenado();
             }
-
         }
+ 
     }
+    
     /**
      * permite devolver la fecha en el formato 01-10-20
      */
 
     public String obtenerFecha()
     {
-
-        String nuevoDia = "";
-        String nuevoMes = "";
-        String nuevoAnio = "";
-        /**
-         * if(nuevoDia.lenght() < 2){
-         *     nuevoDia = "0" + nuevoDia;
-         *  }
-         */
-        if(dia < 10){
-            nuevoDia = "0" + dia;
-        }
-        else{
-            nuevoDia = "" + dia;
-        }
-
-        if(mes < 10){
-            nuevoMes = "0" + mes;
-        }
-        else{
-            nuevoMes = "" + mes;
-        }
-        if(anio < 10){
-            nuevoAnio = "0" + anio;
-        }
-        else{
-            nuevoAnio = "" + anio;
-        }
         
-        return nuevoDia + "-" +  nuevoMes + "-" + nuevoAnio;
-    } 
+        return dia.getTextoDelDisplay()+ "-" + mes.getTextoDelDisplay() + "-" + anio.getTextoDelDisplay();
+    }
+       
 
 }
